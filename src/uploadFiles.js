@@ -2,10 +2,11 @@ const FormData = require("form-data");
 const path = require("path");
 const fs = require("fs");
 const fetch = require("cross-fetch");
+const config = require("../config/config.json");
 
-const basePath = "/Users/philippevincent/Desktop/NFT/generator/hashlips_art_engine";
-const AUTH = "d035ad6a-80b0-4928-bb15-3301ba63d579";
-const TIMEOUT = 1000; // Milliseconds. Extend this if needed to wait for each upload. 1000 = 1 second.
+const basePath = config.basePath;
+const AUTH = config.API_KEYl
+const TIMEOUT = config.TIMEOUT; // Milliseconds. Extend this if needed to wait for each upload. 1000 = 1 second.
 
 const allMetadata = [];
 
@@ -53,7 +54,6 @@ async function fetchWithRetry(file) {
             const fileStream = fs.createReadStream(`${basePath}/build/images/${_file}`);
             formData.append("file", fileStream);
 
-            let url = "https://api.nftport.xyz/v0/files";
             let options = {
                 method: "POST",
                 headers: {
@@ -62,7 +62,7 @@ async function fetchWithRetry(file) {
                 body: formData,
             };
 
-            return fetch(url, options).then(async (res) => {
+            return fetch(config.URL, options).then(async (res) => {
                 const status = res.status;
 
                 if (status === 200) {
