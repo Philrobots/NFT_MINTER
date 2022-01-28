@@ -21,6 +21,7 @@ async function main() {
         let metaData = JSON.parse(jsonFile);
         if (!metaData.file_url.includes('https://')) {
             const response = await fetchWithRetry(file);
+
             metaData.file_url = response.ipfs_url;
 
             fs.writeFileSync(
@@ -57,10 +58,12 @@ async function fetchWithRetry(file) {
             let options = {
                 method: "POST",
                 headers: {
-                    Authorization: AUTH,
+                    Authorization: "57e111bc-99e5-4f9e-b317-31668d4f9639",
                 },
                 body: formData,
             };
+
+            console.log(options)
 
             return fetch(config.URL, options).then(async (res) => {
                 const status = res.status;
@@ -77,7 +80,7 @@ async function fetchWithRetry(file) {
             })
                 .then(async (json) => {
 
-                    console.log(json);
+                    console.log(json)
 
                     if (json.response === "OK") {
                         return resolve(json);
